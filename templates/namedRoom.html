@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> CHAT IT UP </title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+
+
+    <script>
+
+    var socket = io.connect();
+    console.log(socket);
+    $(document).ready(function() {
+
+      //setInterval(refreshMsgs,3000);
+
+      var name = prompt('What is your name ?');
+
+      $("#namingForm").submit(function(event) {
+        event.preventDefault();
+
+        name = $("#nameChanger").val();
+
+
+
+    //    socket.emit('nickname', name, "{{theChatSpaceID}}")
+
+        $("#nameChanger").val("");
+
+      });
+
+
+
+      $("#messagingForm").submit(function(event) {
+        event.preventDefault();
+
+        var dt = whatTimeIsIt();
+
+        var msg = $("#messageToSend").val();
+        $("#messageToSend").val("");
+
+
+        var object = { userName : name,
+                     message: msg,
+                     theChatSpaceID:  "{{theChatSpaceID}}",
+                     theChatSpaceName:  "{{theChatSpaceName}}",
+                     date : dt
+                   };
+
+
+
+
+        // socket.emit('message', object);
+
+
+
+      });
+
+
+      //socket.on
+      //
+      // socket.on('message', function(userName, message, time) {
+      //   $("#chatLog").append("<li>" +
+      //    "[" +  time + "]     "
+      //     + userName +
+      //     " : "
+      //     + message +
+      //
+      //     "<li>");
+      // });
+      //
+      // socket.on('newMember', function(listOfNames) {
+      //       $('#membersListed').empty();
+      //       for(var x= 0; listOfNames.length- 1 >= x; x++) {
+      //           $('#membersListed').append(listOfNames[x]);
+      //       }
+      // });
+      //
+      //
+      socket.emit('join', "{{theChatSpaceID}}", name, function(messages) {
+        console.log('we in this thang joining');
+        $("#chatLog").empty();
+
+        for(var x= 0; messages.length- 1 >= x; x++) {
+            $("#chatLog").append("<li>" +
+           "[" +  messages[x].time + "]     "
+            + messages[x].nickname +
+            " : "
+            + messages[x].body +
+
+            "<li>")
+        }
+      });
+
+    });
+
+
+    function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+
+    function whatTimeIsIt() {
+        var d = new Date();
+
+        var h = addZero(d.getHours());
+        var m = addZero(d.getMinutes());
+        var s = addZero(d.getSeconds());
+
+        return  h + " : " + m + " : " + s;
+
+    }
+
+    function refreshMsgs() {
+      $.post('/findMessages', {roomId: "{{theChatSpaceID}}"}  ,function(data, error) {
+          $("#chatLog").empty();
+
+          for(var x= 0; data.rows.length- 1 >= x; x++) {
+              $("#chatLog").append("<li>" +
+             "[" +  data.rows[x].time + "]     "
+              + data.rows[x].nickname +
+              " : "
+              + data.rows[x].body +
+
+              "<li>")
+          }
+      });
+
+    }
+
+
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+  </head>
+
+  <body>
+    <h1> name: {{theChatSpaceName}} </h1>
+   <h3> id: {{theChatSpaceID}} </h3>
+
+
+<div class = "typeForms">
+   <form action = "" class= "forms" id= "messagingForm" >
+
+     <input type="textarea" id="messageToSend" >
+
+     <input id ="sendMsg" type = "submit"  value = "send message">
+
+  </form>
+
+  <form action = "" class= "forms"  id= "namingForm" >
+
+    <input type="textarea" id="nameChanger" >
+
+    <input id ="namer" type = "submit"  value = "change your name">
+
+ </form>
+
+
+ <ul id= 'membersListed'>
+
+
+ </ul>
+
+<div>
+
+
+<div  class = "typeForms" id="chat">
+
+    <p> CHAT LOG of {{theChatSpaceName}} </p>
+
+   <ul id="chatLog">
+
+  </ul>
+
+</div>
+
+
+
+
+  </body>
+</html>

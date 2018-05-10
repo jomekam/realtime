@@ -1,0 +1,84 @@
+body {
+
+  background-color: #d2b48c;
+  text-align: center;
+}
+
+h1, h3 {
+  text-decoration: underline;
+
+}
+
+p {
+  text-transform: uppercase;
+
+}
+
+.typeForms {
+  display: inline;
+}
+
+#membersListed {
+
+  padding-top:  20px;
+}
+
+.forms {
+  padding-top: 20px;
+  align-items: center;
+  background-color: #90ee90;
+  width: 300px;
+  height: 100px;
+}
+
+#theChatSpaceName, #messageToSend {
+  width: 200px;
+  height: 30px;
+  border: 3px solid #cccccc;
+  padding: 5px;
+  font-family: Tahoma, sans-serif;
+
+
+}
+
+#submitButton, #sendMsg, #namer {
+
+   padding:5px 15px;
+   background:#ccc;
+   border:0 none;
+   cursor:pointer;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+}
+
+#submitButton:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#sendMsg:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#namer:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+
+  padding-bottom: 10px;
+}
+
+#chat {
+  width: 400px;
+  background-color: #ADD8E6;
+  text-align: center;
+  float: right;
+  display: inline-block;
+}

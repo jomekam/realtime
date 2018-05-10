@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> CHAT IT UP </title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <h1>MAIN PLACE</h1>
+
+    <p> Insert a chat room name and get it popping </p>
+
+    <form id= "roomForm" method= "POST" action="/room/{{newRoom}}">
+      <input type="textarea" id="theChatSpaceName" name="theChatSpaceName">
+      <input type="hidden" id= "theChatSpaceID" name="theChatSpaceID" value = "{{newRoom}}">
+      <input type= "submit" id="submitButton" value = "LETS CHAT IT UP!">
+    </form>
+
+
+    <button onclick= "delete();" >
+      delete
+    </button>
+    <script type='text/js'>
+      function delete() {
+        $.get('/delete', function(data, err) {
+
+        });
+      }
+    </script>
+
+  </body>
+
+
+
+</html>
